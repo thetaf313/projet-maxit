@@ -1,0 +1,26 @@
+{
+    "name": "twist/projet-maxit",
+    "description": "Application avec services de transfert et de paiement",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\Entity\\": "src/entity/",
+            "App\\Controller\\": "src/controller/",
+            "App\\Service\\": "src/service/",
+            "App\\Repository\\": "src/repository/",
+            "App\\Core\\": "app/core/",
+            "App\\Core\\Abstract\\": "app/core/abstract/",
+            "App\\Core\\Middlewares\\": "app/core/middlewares/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Twist Price",
+            "email": "tapha.ednayas313@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "*"
+    }
+}
