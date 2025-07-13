@@ -4,7 +4,7 @@ namespace App\Entity;
 
 enum TypeTransaction: string {
 
-    case PAIEMENT = 'PAIEMENT';
-    case DEPOT = 'DEPOT';
-    case RETRAIT = 'RETRAIT';
+    case PAIEMENT = 'Paiement';
+    case DEPOT = 'Depot';
+    case RETRAIT = 'Retrait';
 }

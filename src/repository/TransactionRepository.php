@@ -20,7 +20,7 @@ class TransactionRepository extends AbstractRepository{
     // }
 
     public function selectAll() {}
-    public function insert() {}
+    public function insert($entity) {}
     public function update() {}
     public function delete() {}
     public function selectById() {}

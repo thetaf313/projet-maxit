@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Core\Abstract\AbstractController;
 use App\Core\App;
+use App\Core\FileUploader;
 use App\Core\Validator;
 use App\Service\SecurityService;
 
@@ -35,44 +36,91 @@ class SecurityController extends AbstractController
 
     public function createAccount()
     {
-        $this->renderHtml('auth/register');
+        $role = $this->securityService->getRoleByName('client');
+        $this->renderHtml('auth/register', ['role' => $role]);
     }
 
     public function login()
     {
-
-        // header('Location: /client/dashboard');
-        // exit;
-
-        //traitement
         $formData = [
             'login' => trim($_POST['login'] ?? ''),
             'password' => trim($_POST['password'] ?? '')
         ];
 
-        Validator::valide($formData['login'], 'login', ['required', 'senegal_phone']);
-        Validator::valide($formData['password'], 'password', ['required']);
-        /*
-           Validator::valide($formData['login'],'login',["required","email"]))
-        */
+        // Validation
+        Validator::validate($formData, [
+            'login' => ['required', 'senegal_phone'],
+            'password' => ['required', 'min:3']
+        ]);
 
         if (!Validator::isValid()) {
             $this->session->set('flash_errors', Validator::getErrors());
-            $this->session->set('old_input', $formData);
+            // $this->session->set('flash_formData', $formData);
             header('Location: /');
             exit;
         }
 
+        // Authentification
         $user = $this->securityService->seConnecter($formData['login'], $formData['password']);
+
         if (!$user) {
-            Validator::addError('global', 'login ou mot de passe incorrect.');
+            Validator::addError('global', 'Login ou mot de passe incorrects');
             $this->session->set('flash_errors', Validator::getErrors());
-            $this->session->set('old_input', $formData);
+            $this->session->set('flash_formData', $formData);
             header('Location: /');
             exit;
         }
+
+        // Connexion réussie
         $this->session->set('user', $user->toArray());
-        error_log('connected user : ' . $this->session->get('user')['login']);
+        header('Location: /client/dashboard');
+        exit;
+    }
+    public function register()
+    {
+        error_log('Données du formulaire : ' . print_r($_POST, true));
+        Validator::validate($_POST, [
+            'prenom' => ['required', 'min:2'],
+            'nom' => ['required', 'min:2'],
+            'adresse' => ['required', 'min:5'],
+            'nin' => ['required', 'senegal_nin', 'unique:UserRepository'],
+            'telephone' => ['required', 'senegal_phone', 'unique:UserRepository'],
+            'password' => ['required', 'min:8'],
+            'photo_recto' => ['file_mime:image/jpeg,image/png', 'file_size:2048000'],
+            'photo_verso' => ['file_mime:image/jpeg,image/png', 'file_size:2048000']
+        ]);
+
+        if (!Validator::isValid()) {
+            $this->session->set('flash_errors', Validator::getErrors());
+            $this->session->set('flash_formData', $_POST);
+            header('Location: /account/create');
+            exit;
+        }
+
+        // Upload des photos
+        $photoRectoPath = FileUploader::upload($_FILES['photo_recto'], 'uploads');
+        $photoVersoPath = FileUploader::upload($_FILES['photo_verso'], 'uploads');
+
+        if (!$photoRectoPath || !$photoVersoPath) {
+            $this->session->set('flash_errors', ['global' => 'Erreur lors de l\'upload des photos.']);
+            $this->session->set('flash_formData', $_POST);
+            header('Location: /account/create');
+            exit;
+        }
+        $_POST['photo_recto'] = $photoRectoPath;
+        $_POST['photo_verso'] = $photoVersoPath;
+
+        // Enregistrement
+        $user = $this->securityService->creerCompte($_POST);
+        if (!$user) {
+            $this->session->set('flash_errors', ['global' => 'Erreur lors de la création du compte.']);
+            $this->session->set('flash_formData', $_POST);
+            header('Location: /account/create');
+            exit;
+        }
+        // Connexion réussie
+        $this->session->set('user', $user->toArray());
+        $this->session->set('flash_success', 'Compte créé avec succès !');
         header('Location: /client/dashboard');
         exit;
     }

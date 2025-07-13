@@ -1,10 +1,18 @@
+<?php
+$errors = $_SESSION['flash_errors'] ?? [];
+$formData = $_SESSION['flash_formData'] ?? [];
+var_dump($role);
+unset($_SESSION['flash_errors'], $_SESSION['flash_formData']);
+?>
+
 <body class="bg-gray-800 min-h-screen">
-  <div class="min-h-screen flex items-center justify-center px-4 py-8">
+  <div class="min-h-screen flex items-center justify-center px-4 py-4">
     <div class="w-full max-w-6xl">
-      <form id="signupForm" class="grid grid-cols-1 lg:grid-cols-2 gap-8" novalidate>
+      <h1 class="text-3xl font-bold text-white mb-4 text-center">Inscription</h1>
+      <form action="/register" method="post" enctype="multipart/form-data" id="signupForm" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- Colonne Gauche -->
-        <div class="bg-gray-700 p-8 rounded-2xl border border-gray-600">
-          <div class="space-y-6">
+        <div class="bg-gray-700 px-8 py-6 rounded-2xl border border-gray-600 max-w-[30rem]">
+          <div class="space-y-4">
             <!-- Prénom -->
             <div>
               <label for="prenom" class="block text-white text-sm font-medium mb-2">
@@ -16,10 +24,12 @@
                 name="prenom"
                 class="w-full px-4 py-3 bg-gray-300 border-0 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all duration-200"
                 placeholder="Entrez votre prénom"
-                required
+                value="<?= htmlspecialchars($formData['prenom'] ?? '') ?>"
                 autocomplete="given-name"
                 aria-describedby="prenom-error">
-              <div id="prenom-error" class="text-red-400 text-xs mt-1 hidden" role="alert"></div>
+              <?php if (!empty($errors['prenom'])): ?>
+                <div class="text-red-400 text-xs mt-1" role="alert"><?= htmlspecialchars($errors['nom'][0]) ?></div>
+              <?php endif; ?>
             </div>
 
             <!-- Nom -->
@@ -33,9 +43,12 @@
                 name="nom"
                 class="w-full px-4 py-3 bg-gray-300 border-0 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all duration-200"
                 placeholder="Entrez votre nom"
-                required
+                value="<?= htmlspecialchars($formData['nom'] ?? '') ?>"
                 autocomplete="family-name"
                 aria-describedby="nom-error">
+              <?php if (!empty($errors['nom'])): ?>
+                <div class="text-red-400 text-xs mt-1" role="alert"><?= htmlspecialchars($errors['nom'][0]) ?></div>
+              <?php endif; ?>
               <div id="nom-error" class="text-red-400 text-xs mt-1 hidden" role="alert"></div>
             </div>
 
@@ -50,10 +63,12 @@
                 name="adresse"
                 class="w-full px-4 py-3 bg-gray-300 border-0 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all duration-200"
                 placeholder="Entrez votre adresse"
-                required
+                value="<?= htmlspecialchars($formData['adresse'] ?? '') ?>"
                 autocomplete="street-address"
                 aria-describedby="adresse-error">
-              <div id="adresse-error" class="text-red-400 text-xs mt-1 hidden" role="alert"></div>
+              <?php if (!empty($errors['adresse'])): ?>
+                <div class="text-red-400 text-xs mt-1" role="alert"><?= htmlspecialchars($errors['adresse'][0]) ?></div>
+              <?php endif; ?>
             </div>
 
             <!-- Téléphone -->
@@ -67,10 +82,12 @@
                 name="telephone"
                 class="w-full px-4 py-3 bg-gray-300 border-0 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all duration-200"
                 placeholder="Entrez votre numéro de téléphone"
-                required
+                value="<?= htmlspecialchars($formData['telephone'] ?? '') ?>"
                 autocomplete="tel"
                 aria-describedby="telephone-error">
-              <div id="telephone-error" class="text-red-400 text-xs mt-1 hidden" role="alert"></div>
+              <?php if (!empty($errors['telephone'])): ?>
+                <div class="text-red-400 text-xs mt-1" role="alert"><?= htmlspecialchars($errors['telephone'][0]) ?></div>
+              <?php endif; ?>
             </div>
 
             <!-- Mot de passe -->
@@ -84,17 +101,18 @@
                 name="password"
                 class="w-full px-4 py-3 bg-gray-300 border-0 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all duration-200"
                 placeholder="Créez un mot de passe"
-                required
                 autocomplete="new-password"
                 aria-describedby="password-error">
-              <div id="password-error" class="text-red-400 text-xs mt-1 hidden" role="alert"></div>
+              <?php if (!empty($errors['password'])): ?>
+                <div class="text-red-400 text-xs mt-1" role="alert"><?= htmlspecialchars($errors['password'][0]) ?></div>
+              <?php endif; ?>
             </div>
           </div>
         </div>
 
         <!-- Colonne Droite -->
-        <div class="bg-gray-700 p-8 rounded-2xl border border-gray-600">
-          <div class="space-y-6">
+        <div class="bg-gray-700 p-8 rounded-2xl border border-gray-600 max-w-[30rem]">
+          <div class="space-y-4">
             <!-- NIN -->
             <div>
               <label for="nin" class="block text-white text-sm font-medium mb-2">
@@ -106,9 +124,15 @@
                 name="nin"
                 class="w-full px-4 py-3 bg-gray-300 border-0 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all duration-200"
                 placeholder="Numéro d'identification national"
-                required
+                value="<?= htmlspecialchars($formData['nin'] ?? '') ?>"
                 aria-describedby="nin-error">
-              <div id="nin-error" class="text-red-400 text-xs mt-1 hidden" role="alert"></div>
+              <?php if (!empty($errors['nin'])): ?>
+                <div class="text-red-400 text-xs mt-1" role="alert"><?= htmlspecialchars($errors['nin'][0]) ?></div>
+              <?php endif; ?>
+            </div>
+
+            <div>
+              <input type="hidden" name="role" value="<?= $role['id'] ?? '' ?>">
             </div>
 
             <!-- Zone Upload Photo recto -->
@@ -116,39 +140,46 @@
               <label class="block text-white text-sm font-medium mb-2">
                 Photo recto CIN
               </label>
-              <div class="upload-area bg-gray-600 rounded-lg p-6 text-center cursor-pointer"
+              <div class="upload-area bg-gray-600 rounded-lg p-4 text-center cursor-pointer"
                 id="upload-recto"
                 onclick="document.getElementById('photo-recto').click()">
                 <svg class="w-12 h-12 mx-auto mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                 </svg>
                 <p class="text-gray-400 text-sm">Photo recto CIN</p>
-                <input type="file" id="photo-recto" name="photo-recto" accept="image/*" class="hidden" aria-describedby="photo-recto-error">
+                <input type="file" id="photo-recto" name="photo_recto" accept="image/*" class="hidden" aria-describedby="photo-recto-error">
               </div>
-              <div id="photo-recto-error" class="text-red-400 text-xs mt-1 hidden" role="alert"></div>
+              <?php if (!empty($errors['photo_recto'])): ?>
+                <div class="text-red-400 text-xs mt-1">
+                  <?= $errors['photo_recto'][0] ?>
+                  <?php if (isset($_FILES['photo_recto'])): ?>
+                    (Type reçu: <?= $_FILES['photo_recto']['type'] ?>)
+                  <?php endif; ?>
+                </div>
+              <?php endif; ?>
             </div>
-
-
 
             <!-- Zone Upload Photo verso -->
             <div>
               <label class="block text-white text-sm font-medium mb-2">
                 Photo verso CIN
               </label>
-              <div class="upload-area bg-gray-600 rounded-lg p-6 text-center cursor-pointer"
+              <div class="upload-area bg-gray-600 rounded-lg p-4 text-center cursor-pointer"
                 id="upload-verso"
                 onclick="document.getElementById('photo-verso').click()">
                 <svg class="w-12 h-12 mx-auto mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                 </svg>
                 <p class="text-gray-400 text-sm">Photo verso CIN</p>
-                <input type="file" id="photo-verso" name="photo-verso" accept="image/*" class="hidden" aria-describedby="photo-verso-error">
+                <input type="file" id="photo-verso" name="photo_verso" accept="image/*" class="hidden" aria-describedby="photo-verso-error">
               </div>
-              <div id="photo-verso-error" class="text-red-400 text-xs mt-1 hidden" role="alert"></div>
+              <?php if (!empty($errors['photo_verso'])): ?>
+                <div class="text-red-400 text-xs mt-1" role="alert"><?= htmlspecialchars($errors['photo_verso'][0]) ?></div>
+              <?php endif; ?>
             </div>
 
             <!-- Boutons -->
-            <div class="lg:col-span-2 flex justify-center space-x-4 mt-6">
+            <div class="lg:col-span-2 flex justify-center space-x-4 mt-8">
               <button
                 type="button"
                 id="cancelBtn"
@@ -161,6 +192,10 @@
                 Valider
               </button>
             </div>
+
+            <?php if (!empty($errors['global'])): ?>
+              <div class="text-red-400 text-center text-xs mt-2" role="alert"><?= htmlspecialchars($errors['global']) ?></div>
+            <?php endif; ?>
 
           </div>
         </div>

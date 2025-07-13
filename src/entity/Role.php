@@ -13,6 +13,22 @@ class Role {
         $this->nom = $nom;   
     }
 
+    public static function toObject(array $data): Role
+    {
+        return new Role(
+            $data['id'] ?? 0,
+            $data['nom'] ?? ''
+        );
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'nom' => $this->nom
+        ];
+    }
+
     /**
      * Get the value of id
      */ 

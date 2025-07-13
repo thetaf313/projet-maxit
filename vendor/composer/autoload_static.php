@@ -33,6 +33,7 @@ class ComposerStaticInit42422bb918407990c8e42df14b0c6d0d
         ),
         'A' => 
         array (
+            'App\\Translate\\Fr\\' => 17,
             'App\\Service\\' => 12,
             'App\\Repository\\' => 15,
             'App\\Entity\\' => 11,
@@ -67,6 +68,10 @@ class ComposerStaticInit42422bb918407990c8e42df14b0c6d0d
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
+        ),
+        'App\\Translate\\Fr\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/translate/fr',
         ),
         'App\\Service\\' => 
         array (

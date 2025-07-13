@@ -11,7 +11,7 @@ abstract class AbstractRepository
      protected PDO $pdo;
 
     abstract public function selectAll();
-    abstract public function insert();
+    abstract public function insert($entity): ?int;
     abstract public function update();
     abstract public function delete();
     abstract public function selectById();
@@ -22,4 +22,12 @@ abstract class AbstractRepository
         $this->pdo = Database::getInstance();
     }
 
+
+     /**
+      * Get the value of pdo
+      */ 
+     public function getPdo()
+     {
+          return $this->pdo;
+     }
 }

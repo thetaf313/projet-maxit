@@ -12,7 +12,7 @@ class User extends AbstractEntity {
     private string $adresse;
     private string $login;
     private string $password;
-    private int $nin;
+    private string $nin;
     private string $photoRecto;
     private string $photoVerso;
     private Role $role;

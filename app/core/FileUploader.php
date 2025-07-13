@@ -4,16 +4,17 @@ namespace App\Core;
 
 class FileUploader
 {
-
-    public static function upload(array $file): ?string
+    public static function upload(array $file, string $subDir = ''): ?string
     {
-        $uploadDir = UPLOAD_DIR;
+        $uploadDir = rtrim(UPLOAD_DIR, '/') . '/';
+        if ($subDir !== '') {
+            $uploadDir .= trim($subDir, '/') . '/';
+        }
 
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }
 
-        // Vérifie qu'il n'y a pas d'erreur
         if ($file['error'] !== UPLOAD_ERR_OK) {
             return null;
         }
@@ -21,11 +22,11 @@ class FileUploader
         $filename = uniqid() . '_' . basename($file['name']);
         $targetPath = $uploadDir . $filename;
 
-        // Déplace le fichier uploadé
         if (move_uploaded_file($file['tmp_name'], $targetPath)) {
+            error_log("File uploaded successfully: " . $targetPath);
             return $targetPath;
         }
-
+        error_log("Failed to move uploaded file to: " . $targetPath);
         return null;
     }
 }

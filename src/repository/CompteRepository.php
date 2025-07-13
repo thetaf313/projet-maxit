@@ -9,7 +9,7 @@ class CompteRepository extends AbstractRepository {
 
     // private static ?CompteRepository $instance = null;
 
-    private function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -21,7 +21,22 @@ class CompteRepository extends AbstractRepository {
     // }
 
     public function selectAll() {}
-    public function insert() {}
+
+    public function insert($compte): ?int
+    {
+        $query = "INSERT INTO comptes (telephone, type_compte, solde, user_id) 
+                  VALUES (:telephone, :type_compte, :solde, :user_id)";
+        $params = [
+            'telephone' => $compte->getTelephone(),
+            'type_compte' => $compte->getTypeCompte()->value, // Assuming TypeCompte is a backed enum
+            'solde' => $compte->getSolde(),
+            'user_id' => $compte->getUser()->getId()
+        ];
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute($params);
+        return (int)$this->pdo->lastInsertId();
+    }
+
     public function update() {}
     public function delete() {}
     public function selectById() {}

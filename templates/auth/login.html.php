@@ -1,74 +1,9 @@
 <?php
 $errors = $_SESSION['flash_errors'] ?? [];
 $formData = $_SESSION['flash_formData'] ?? [];
+// var_dump($errors);
 unset($_SESSION['flash_errors'], $_SESSION['flash_formData']);
 ?>
-
-<!-- <div class="relative flex size-full min-h-screen flex-col bg-[#262626] group/design-root overflow-x-hidden" style='font-family: Inter, "Noto Sans", sans-serif;'>
-  <div class="layout-container flex h-full grow flex-col items-center mt-8">
-    
-          <div class="flex items-center gap-4 text-[#111418]">
-            <div class="size-4">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill="currentColor"></path>
-              </svg>
-            </div>
-            <h2 class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em]">MAXITSA</h2>
-          </div>
-          
-    <form action="/login" method="post">
-      <div class="px-40 flex flex-1 justify-center py-5">
-        <div class="layout-content-container flex flex-col w-[512px] max-w-[512px] py-5 max-w-[960px] flex-1">
-          <h2 class="text-[#FFFFFF] tracking-light text-[28px] font-bold leading-tight px-4 text-center pb-3 pt-5">Connectez-vous à MAXITSA</h2>
-          <?php if (!empty($errors['global'])): ?>
-            <div class="mb-4 text-red-400 text-sm text-center">
-              <?= htmlspecialchars($errors['global']) ?>
-            </div>
-          <?php endif; ?>
-
-          <div class="flex max-w-[480px] flex-col px-4 py-3">
-            <label class="flex flex-col min-w-40 flex-1 mb-1">
-              <p class="text-[#FFFFFF] text-base font-medium leading-normal pb-2">Numéro de téléphone</p>
-              <input
-                placeholder="Entrez votre numéro de téléphone"
-                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#262626] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f4] focus:border-none h-14 placeholder:text-[#637588] p-4 text-base font-normal leading-normal"
-                value="<?= htmlspecialchars($formData['login'] ?? '') ?>"
-                name="login"
-                autocomplete="off" />
-            </label>
-            <?php if (!empty($errors['login'])): ?>
-              <div class="text-red-400 text-sm"><?= htmlspecialchars($errors['login']) ?></div>
-              <?php endif; ?>
-          </div>
-          <div class="flex max-w-[480px] flex-col px-4 py-3">
-            <label class="flex flex-col min-w-40 flex-1 mb-1">
-              <p class="text-[#FFFFFF] text-base font-medium leading-normal pb-2">Mot de passe</p>
-              <input
-                type="password"
-                placeholder="Entrez votre mot de passe"
-                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#262626] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f4] focus:border-none h-14 placeholder:text-[#637588] p-4 text-base font-normal leading-normal"
-                value=""
-                name="password"
-                autocomplete="new-password" />
-            </label>
-            <?php if (!empty($errors['password'])): ?>
-                <div class="text-red-400 text-sm"><?= htmlspecialchars($errors['password']) ?></div>
-            <?php endif; ?>
-          </div>
-          <p class="text-[#FFFFFF] text-xs text-right font-normal leading-normal pb-3 pt-1 px-4 underline cursor-pointer"><a href="#">Mot de passe oublié ?</a></p>
-          <div class="flex px-4 py-3 justify-center">
-            <button
-              type="submit"
-              class="flex min-w-[84px] max-w-[280px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 flex-1 bg-[#BEBEC0] text-[#262626] text-base font-bold leading-normal tracking-[0.015em]">
-              <span class="truncate">Se connecter</span>
-            </button>
-          </div>
-          <p class="text-[#637588] text-sm font-normal leading-normal pb-3 pt-1 px-4 text-center underline"><a href="/account/create"> n'avez pas de compte ? Créer un compte</a></p>
-        </div>
-      </div>
-    </form>
-  </div>
-</div> -->
 
 <!-- fdgfhkjklk;l;l -->
 
@@ -93,11 +28,11 @@ unset($_SESSION['flash_errors'], $_SESSION['flash_formData']);
                         name="login"
                         class="w-full px-4 py-3 bg-gray-300 border-0 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all duration-200 hover:input-focus"
                         placeholder="Entrez votre téléphone"
-                        value="<?= htmlspecialchars($formData['login'] ?? '') ?>"
+                        value=""
                         autocomplete="off"
                         aria-describedby="identifier-error">
                     <?php if (!empty($errors['login'])): ?>
-                        <div class="text-red-400 text-xs mt-1" role="alert"><?= htmlspecialchars($errors['login']) ?></div>
+                        <div class="text-red-400 text-xs mt-1" role="alert"><?= htmlspecialchars($errors['login'][0]) ?></div>
                     <?php endif; ?>
                     <!-- <div id="identifier-error" class="text-red-400 text-xs mt-1 hidden" role="alert"></div> -->
                 </div>
@@ -114,8 +49,8 @@ unset($_SESSION['flash_errors'], $_SESSION['flash_formData']);
                             name="password"
                             class="w-full px-4 py-3 bg-gray-300 border-0 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all duration-200 hover:input-focus pr-12"
                             placeholder="Entrez votre mot de passe"
-                            autocomplete="current-password"
-                            aria-describedby="password-error">
+                            autocomplete="new-password"
+                            >
                         <button
                             type="button"
                             id="togglePassword"
@@ -131,7 +66,7 @@ unset($_SESSION['flash_errors'], $_SESSION['flash_formData']);
                         </button>
                     </div>
                     <?php if (!empty($errors['password'])): ?>
-                        <div class="text-red-400 text-xs mt-1"><?= htmlspecialchars($errors['password']) ?></div>
+                        <div class="text-red-400 text-xs mt-1" role="alert"><?= htmlspecialchars($errors['password'][0]) ?></div>
                     <?php endif; ?>
                     <!-- <div id="password-error" class="text-red-400 text-xs mt-1 hidden" role="alert"></div> -->
                 </div>
@@ -175,7 +110,7 @@ unset($_SESSION['flash_errors'], $_SESSION['flash_formData']);
             <!-- <p id="global-error-message"></p> -->
             <?php if (!empty($errors['global'])): ?>
                     <div class="m-4 text-red-400 text-sm text-center rounded-lg">
-                        <?= htmlspecialchars($errors['global']) ?>
+                        <?= htmlspecialchars($errors['global'][0]) ?>
                     </div>
                 <?php endif; ?>
         <!-- </div> -->

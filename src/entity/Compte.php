@@ -7,17 +7,43 @@ class Compte {
     private int $id;
     private string $telephone;
     private float $solde;
-    private TypeCompte $typeCompte;
+    private ?TypeCompte $typeCompte;
     private User $user;
     private array $transactions = [];
 
-    private function __construct(int $id=0, $telephone='', float $solde=0.0, ?TypeCompte $typeCompte=null)
+    public function __construct(int $id=0, $telephone='', float $solde=0.0, ?TypeCompte $typeCompte=null)
     {
         $this->id = $id;
         $this->telephone = $telephone;
         $this->solde = $solde;
         $this->typeCompte = $typeCompte;
         $this->user = new User();
+    }
+
+    public static function toObject(array $data): Compte
+    {
+        $compte = new Compte(
+            $data['id'] ?? 0,
+            $data['telephone'] ?? '',
+            $data['solde'] ?? 0.0,
+            isset($data['type_compte']) ? TypeCompte::from($data['type_compte']) : null
+        );
+        if (isset($data['user'])) {
+            $compte->setUser(User::toObject($data['user']));
+        }
+        return $compte;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'telephone' => $this->telephone,
+            'solde' => $this->solde,
+            'type_compte' => $this->typeCompte ? $this->typeCompte->value : null,
+            'user' => $this->user->toArray(),
+            'transactions' => array_map(fn($transaction) => $transaction->toArray(), $this->transactions)
+        ];
     }
 
     /**
