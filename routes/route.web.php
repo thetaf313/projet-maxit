@@ -39,6 +39,6 @@ $routes = [
     '/client/dashboard' => [
         'controller' => ClientController::class,
         'action' => 'index',
-        // 'middlewares' => ['auth']
+        'middlewares' => ['auth']
     ]
 ];

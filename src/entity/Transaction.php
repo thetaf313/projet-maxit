@@ -23,6 +23,33 @@ class Transaction {
         $this->statutTransaction = $statutTransaction;
     }
 
+    public static function toObject(array $data): Transaction
+    {
+        $transaction = new Transaction(
+            $data['id'] ?? 0,
+            isset($data['date']) ? new DateTime($data['date']) : null,
+            $data['montant'] ?? 0.0,
+            isset($data['type_transaction']) ? TypeTransaction::from($data['type_transaction']) : null,
+            isset($data['statut_transaction']) ? StatutTransaction::from($data['statut_transaction']) : null
+        );
+        if (isset($data['compte_id'])) {
+            $transaction->getCompte()->setId($data['compte_id']);
+        }
+        return $transaction;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'date' => $this->date->format('Y-m-d H:i:s'),
+            'montant' => $this->montant,
+            'compte_id' => $this->compte->getId(),
+            'type_transaction' => $this->typeTransaction ? $this->typeTransaction->value : null,
+            'statut_transaction' => $this->statutTransaction ? $this->statutTransaction->value : null
+        ];
+    }
+
     /**
      * Get the value of id
      */ 

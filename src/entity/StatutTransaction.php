@@ -3,8 +3,7 @@
 namespace App\Entity;
 
 enum StatutTransaction:string {
-    case VALIDE = 'VALIDE';
-    case ECHOUE = 'ECHOUE';
-    case ANNULE = 'ANNULE';
+    case VALIDE = 'Valide';
+    case ANNULE = 'Annule';
     // case EN_ATTENTE = 'EN_ATTENTE';
 }

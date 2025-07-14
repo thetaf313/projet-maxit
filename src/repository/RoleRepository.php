@@ -32,7 +32,7 @@ class RoleRepository extends AbstractRepository
     }
 
     public function selectAll() {}
-    public function insert($entity): ?int {}
+    public function insert($entity):int {return 0;}
     public function update() {}
     public function delete() {}
     public function selectById() {}

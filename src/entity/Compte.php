@@ -28,8 +28,8 @@ class Compte {
             $data['solde'] ?? 0.0,
             isset($data['type_compte']) ? TypeCompte::from($data['type_compte']) : null
         );
-        if (isset($data['user'])) {
-            $compte->setUser(User::toObject($data['user']));
+        if (isset($data['user_id'])) {
+            $compte->getUser()->setId($data['user_id']);
         }
         return $compte;
     }

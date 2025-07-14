@@ -20,7 +20,6 @@ class App
 
     public static function getDependency(string $className)
     {
-        // Si l'instance existe déjà, on la retourne
         if (isset(self::$instances[$className])) {
             return self::$instances[$className];
         }

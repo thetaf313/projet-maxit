@@ -40,10 +40,10 @@ class User extends AbstractEntity {
         $user->setAdresse($array['adresse'] ?? '');
         $user->setLogin($array['login'] ?? '');
         $user->setPassword($array['password'] ?? '');
-        $user->setNin($array['nin'] ?? '');
-        $user->setPhotoRecto($array['photo_recto'] ?? '');
-        $user->setPhotoVerso($array['photo_verso'] ?? '');
-        $user->getRole()->setNom($array['role_nom'] ?? '');
+        $user->setNin($array['numero_carte_identite'] ?? '');
+        $user->setPhotoRecto($array['photo_identite_recto'] ?? '');
+        $user->setPhotoVerso($array['photo_identite_verso'] ?? '');
+        $user->getRole()->setId($array['role_id'] ?? 0);
         return $user;
     }
 
@@ -59,7 +59,7 @@ class User extends AbstractEntity {
             "nin" => $this->getNin(),
             "photo_recto" => $this->getPhotoRecto(),
             "photo_verso" => $this->getPhotoVerso(),
-            "role_nom" => $this->getRole() ? $this->getRole()->getNom() : null,
+            "role" => $this->getRole() ? $this->getRole()->toArray() : null,
             "comptes" => array_map(fn($compte) => $compte->toArray(), $this->getComptes()),
         ];
     }
