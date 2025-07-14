@@ -25,6 +25,7 @@
                 <div class="card p-4 rounded-2xl border border-gray-600 mb-4">
                     <h2 class="text-white font-semibold text-lg mb-3">Gestion des Comptes</h2>
                     <div class="flex flex-col md:flex-row gap-4">
+                        <!-- <form action="/client/change-account" method="post"> -->
                         <select class="account-selector px-4 py-2 rounded-lg text-white flex-1 border-gray-600 bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300">
                             <option class="bg-gray-700" value="">Selectionner un compte</option>
                             <?php foreach ($comptesSecondaires as $compte): ?>
@@ -38,6 +39,7 @@
                             <button class="bg-[#1f2937] border border-gray-300 px-4 py-2 text-white rounded-lg font-medium">Changer de Compte</button>
                             <button class="btn-secondary px-4 py-2 text-white rounded-lg font-medium">+ Ajouter</button>
                         </div>
+                        <!-- </form> -->
                     </div>
                 </div>
 
@@ -75,12 +77,12 @@
                         <?php endif; ?>
                         <div class="flex justify-between mt-3 text-white">
                             <div>
-                                <p class="text-green-100 text-xs">Revenus</p>
-                                <p class="font-medium">+450 000 FCFA</p>
+                                <p class="text-green-100 text-xs">Depot</p>
+                                <p class="font-medium">+15 500 FCFA</p>
                             </div>
                             <div>
-                                <p class="text-green-100 text-xs">Dépenses</p>
-                                <p class="font-medium">-320 000 FCFA</p>
+                                <p class="text-green-100 text-xs">Retrait</p>
+                                <p class="font-medium">-21 500 FCFA</p>
                             </div>
                         </div>
                     </div>

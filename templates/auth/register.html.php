@@ -1,7 +1,7 @@
 <?php
 $errors = $_SESSION['flash_errors'] ?? [];
 $formData = $_SESSION['flash_formData'] ?? [];
-var_dump($role);
+// var_dump($role);
 unset($_SESSION['flash_errors'], $_SESSION['flash_formData']);
 ?>
 

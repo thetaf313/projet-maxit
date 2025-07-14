@@ -7,13 +7,15 @@ use App\Core\Session;
 class Auth
 {
 
+
+    private Session $session;
     public function __invoke() {
         
-        // $session = App::getDependency(Session::class);
+        $this->session = App::getDependency(Session::class);
 
-        if (!isset($_SESSION['user'])) {
+        if (!$this->session->isset('user')) {
             // Redirige vers la page de connexion si non authentifié
-            header('Location: /');
+            header('Location: /page');
             exit();
         }
     }
