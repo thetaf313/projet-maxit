@@ -39,16 +39,32 @@ class CompteService
         return $this->compteRepository->insert($compte);
     }
 
-    public function changerComptePrincipal(User $user, int $compteId): bool
-    {
+public function changerComptePrincipal(User $user, int $compteId): bool
+{
+    try {
+        $this->compteRepository->getPdo()->beginTransaction();
         // Tous les comptes à type secondaire
         $this->compteRepository->updateTypeCompteByUser($user, TypeCompte::SECONDAIRE->value);
 
         $compte = $this->compteRepository->selectById($compteId);
         if ($compte && $compte->getUser()->getId() === $user->getId()) {
             $compte->setTypeCompte(TypeCompte::PRINCIPAL);
-            return $this->compteRepository->updateToPrincipal($compte);
+
+            $result = $this->compteRepository->updateToPrincipal($compte);
+            if ($result) {
+                $this->compteRepository->getPdo()->commit();
+                return true;
+            } else {
+                $this->compteRepository->getPdo()->rollBack();
+                return false;
+            }
+        } else {
+            $this->compteRepository->getPdo()->rollBack();
+            return false;
         }
+    } catch (\Exception $e) {
+        $this->compteRepository->getPdo()->rollBack();
         return false;
     }
+}
 }

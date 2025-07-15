@@ -40,5 +40,25 @@ $routes = [
         'controller' => ClientController::class,
         'action' => 'index',
         'middlewares' => ['auth']
-    ]
+    ],
+    '/client/change-account' => [
+        'controller' => ClientController::class,
+        'action' => 'changeAccount',
+        'middlewares' => ['auth']
+    ],
+    '/client/account/add-secondary' => [
+        'controller' => ClientController::class,
+        'action' => 'createSecondaryAccount',
+        'middlewares' => ['auth']
+    ],
+    '/client/account/store-secondary' => [
+        'controller' => ClientController::class,
+        'action' => 'storeSecondaryAccount',
+        'middlewares' => ['auth', 'cryptPass']
+    ],
+    '/client/account/list-transactions' => [
+        'controller' => ClientController::class,
+        'action' => 'listTransactions',
+        'middlewares' => ['auth']
+    ],
 ];

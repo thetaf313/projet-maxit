@@ -24,9 +24,9 @@
                 <!-- Gestion des Comptes -->
                 <div class="card p-4 rounded-2xl border border-gray-600 mb-4">
                     <h2 class="text-white font-semibold text-lg mb-3">Gestion des Comptes</h2>
+                    <form action="/client/change-account" method="post">
                     <div class="flex flex-col md:flex-row gap-4">
-                        <!-- <form action="/client/change-account" method="post"> -->
-                        <select class="account-selector px-4 py-2 rounded-lg text-white flex-1 border-gray-600 bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        <select name="compte_id" class="account-selector px-4 py-2 rounded-lg text-white flex-1 border-gray-600 bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300">
                             <option class="bg-gray-700" value="">Selectionner un compte</option>
                             <?php foreach ($comptesSecondaires as $compte): ?>
                                 <option class="bg-gray-700" value="<?= htmlspecialchars($compte['id']) ?>"><?= htmlspecialchars($compte['telephone']) ?> - <?= htmlspecialchars($compte['type_compte']) ?></option>
@@ -36,11 +36,11 @@
                         <option value="famille">Compte Famille</option> -->
                         </select>
                         <div class="flex gap-2">
-                            <button class="bg-[#1f2937] border border-gray-300 px-4 py-2 text-white rounded-lg font-medium">Changer de Compte</button>
-                            <button class="btn-secondary px-4 py-2 text-white rounded-lg font-medium">+ Ajouter</button>
+                            <button type="submit" class="bg-[#1f2937] border border-gray-300 px-4 py-2 text-white rounded-lg font-medium">Changer de Compte</button>
+                            <a href="/client/account/add-secondary" class="btn-secondary px-4 py-2 text-white rounded-lg font-medium">+ Ajouter</a>
                         </div>
-                        <!-- </form> -->
                     </div>
+                </form>
                 </div>
 
                 <!-- Infos + Solde -->
@@ -109,7 +109,7 @@
                 <div class="card p-4 rounded-2xl border border-gray-600">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-white font-semibold text-lg">Dernières Transactions</h2>
-                        <a href="#" class="text-blue-400 hover:text-blue-300 text-sm font-medium">Voir plus →</a>
+                        <a href="/client/account/list-transactions" class="text-blue-400 hover:text-blue-300 text-sm font-medium">Voir plus →</a>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm">

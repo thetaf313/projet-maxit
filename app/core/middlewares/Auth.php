@@ -15,7 +15,7 @@ class Auth
 
         if (!$this->session->isset('user')) {
             // Redirige vers la page de connexion si non authentifié
-            header('Location: /page');
+            header('Location: /');
             exit();
         }
     }

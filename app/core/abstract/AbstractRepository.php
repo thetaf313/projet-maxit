@@ -14,7 +14,7 @@ abstract class AbstractRepository
     abstract public function insert($entity): ?int;
     abstract public function update();
     abstract public function delete();
-    abstract public function selectById();
+//     abstract public function selectById();
     abstract public function selectBy(array $filter);
 
     protected function __construct()

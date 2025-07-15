@@ -34,7 +34,6 @@ class Router
                     }
                     }
                     // $middlewareClass = "App\\Core\\Middlewares\\" . ucfirst($middlewareName);
-                    
                 }
             }
 

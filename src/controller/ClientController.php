@@ -45,4 +45,65 @@ class ClientController extends AbstractController {
         ]);
     }
 
+    public function changeAccount() {
+
+        $user = $this->session->get('user');
+        $user = User::toObject($user);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $compteId = $_POST['compte_id'] ?? null;
+            error_log($user->getId());
+            if ($compteId) {
+                $result = $this->compteService->changerComptePrincipal($user, (int)$compteId);
+                if ($result) {
+                    $this->session->set('success', 'Compte principal changé avec succès.');
+                } else {
+                    $this->session->set('error', 'Erreur lors du changement de compte principal.');
+                }
+            } else {
+                $this->session->set('error', 'Aucun compte sélectionné.');
+            }
+        }
+        // $this->redirect('/client/dashboard'); creer redirectToRoute()
+        header('Location: /client/dashboard');
+        exit();
+    }
+
+    public function createSecondaryAccount() {
+        $user = $this->session->get('user');
+        $user = User::toObject($user);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'telephone' => $_POST['telephone'] ?? '',
+                'solde' => $_POST['solde'] ?? 0,
+                'user' => $user->getId()
+            ];
+            $result = $this->compteService->creerCompteSecondaire($data);
+            if ($result) {
+                $this->session->set('success', 'Compte secondaire créé avec succès.');
+            } else {
+                $this->session->set('error', 'Erreur lors de la création du compte secondaire.');
+            }
+            // $this->redirect('/client/dashboard'); creer redirectToRoute()
+            header('Location: /client/dashboard');
+            exit();
+        }
+        $this->renderHtml('client/add-secondary');
+    }
+
+    public function listTransactions() {
+        $user = $this->session->get('user');
+        $user = User::toObject($user);
+        $comptePrincipal = $this->compteService->getComptePrincipalByUser($user);
+        if (!$comptePrincipal) {
+            $this->session->set('error', 'Aucun compte principal trouvé.');
+            header('Location: /client/dashboard');
+            exit();
+        }
+        $transactions = $this->transactionService->getLastTransactionsByCompte($comptePrincipal, 20);
+        $this->renderHtml('client/list-transactions', [
+            'transactions' => array_map(fn($transaction) => $transaction->toArray(), $transactions)
+        ]);
+    }
+
+
 }

@@ -84,7 +84,13 @@ class CompteRepository extends AbstractRepository
 
     public function update() {}
     public function delete() {}
-    public function selectById() {}
+    public function selectById($compteId) {
+        $query = "SELECT * FROM comptes WHERE id = :id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['id' => $compteId]);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $row ? Compte::toObject($row) : null;
+    }
     public function selectBy(array $filter) {}
 
 
