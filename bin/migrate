@@ -6,11 +6,11 @@ require_once __DIR__ . '/../app/config/env.php';
 use App\Migrations\Migration;
 
 if (DB_DRIVER === 'mysql') {
-    $pdo = new PDO("mysql:host=$MYSQL_DB_HOST;port=$MYSQL_DB_PORT;dbname=$MYSQL_DB_NAME", $MYSQL_DB_USER, $MYSQL_DB_PASS);
+    $pdo = new PDO("mysql:host=".DB_HOST.";port=".DB_PORT, DB_USER, DB_PASS);
 
 } elseif (DB_DRIVER === 'pgsql') {
-    $pdo = new PDO("pgsql:host=$POSTGRES_DB_HOST;port=$POSTGRES_DB_PORT;dbname=$POSTGRES_DB_NAME", $POSTGRES_DB_USER, $POSTGRES_DB_PASS);
-
+    $pdo = new PDO("pgsql:host=".DB_HOST.";port=".DB_PORT, DB_USER, DB_PASS);
+    
 } else {
     die("Driver de base de données non supporté.");
 }

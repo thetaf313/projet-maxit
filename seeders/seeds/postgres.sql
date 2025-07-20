@@ -1,8 +1,8 @@
-INSERT INTO users (nom, prenom, login, password, adresse, numero_carte_identite, photo_identite_recto, photo_identite_verso, role_id)
-VALUES
-('Sow', 'Amina', '770000001', 'password123', 'Dakar, Médina', '1000100010001', 'images/recto1.jpg', 'images/verso1.jpg', 1),
-('Diop', 'Ibrahima', '770000002', 'password123', 'Dakar, Liberté 6', '1000100010002', 'images/recto2.jpg', 'images/verso2.jpg', 1),
-('Fall', 'Ndeye', '770000003', 'password123', 'Dakar, Plateau', '1000100010003', 'images/recto3.jpg', 'images/verso3.jpg', 2);
+-- INSERT INTO users (nom, prenom, login, password, adresse, numero_carte_identite, photo_identite_recto, photo_identite_verso, role_id)
+-- VALUES
+-- ('Sow', 'Amina', '770000001', 'password123', 'Dakar, Médina', '1000100010001', 'images/recto1.jpg', 'images/verso1.jpg', 1),
+-- ('Diop', 'Ibrahima', '770000002', 'password123', 'Dakar, Liberté 6', '1000100010002', 'images/recto2.jpg', 'images/verso2.jpg', 1),
+-- ('Fall', 'Ndeye', '770000003', 'password123', 'Dakar, Plateau', '1000100010003', 'images/recto3.jpg', 'images/verso3.jpg', 2);
 
 INSERT INTO comptes (telephone, type_compte, solde, user_id) VALUES
 ('770000001', 'Principale', 100000, 1),

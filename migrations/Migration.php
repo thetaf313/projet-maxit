@@ -1,12 +1,14 @@
 <?php
+
 namespace App\Migrations;
+
 use PDO;
 use PDOException;
 use Exception;
 
 class Migration
 {
-    private PDO $pdo;
+    private ?PDO $pdo;
     private string $driver;
 
     public function __construct(PDO $pdo)
@@ -21,8 +23,11 @@ class Migration
 
             $this->createDatabase();
             $this->createDbObjects();
+            echo "Migration effectuée avec succès.\n";
         } catch (PDOException $e) {
             die("Erreur de migration: " . $e->getMessage());
+        } finally {
+            $this->pdo = null;
         }
     }
 
@@ -51,6 +56,16 @@ class Migration
                     $adminPdo->exec("CREATE DATABASE " . DB_NAME);
                     echo "Base de données '" . DB_NAME . "' créée avec succès.\n";
                 }
+                $adminPdo = null; // Fermer la connexion
+                // Reconnexion à la nouvelle base
+                $this->pdo = new PDO(
+                    "pgsql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME,
+                    DB_USER,
+                    DB_PASS,
+                    [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+                );
+
+                $this->driver = $this->pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
             } catch (PDOException $e) {
                 // Si la base existe déjà, on continue
                 if (strpos($e->getMessage(), 'already exists') === false) {
