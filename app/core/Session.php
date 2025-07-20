@@ -39,7 +39,6 @@ class Session {
     public function destroy(): void {
         $_SESSION = [];
         //gerer les cookies plus tard
-
         session_destroy();
     }
 }

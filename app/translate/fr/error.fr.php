@@ -21,6 +21,7 @@ enum FrErrorMessages:string {
     case FILE_SIZE = 'Le fichier %s ne doit pas dépasser 2MB.';
     case UNIQUE_PHONE = "Ce numero existe déjà.";
     case UNIQUE = 'Le %s existe déja.';
+    case PHONE = 'Le format du numéro de téléphone est invalide.';
 
     case LOGIN_ERROR = 'Login et/ou mot de passe incorrect !';
     case VERIFY_EMAIL_ERROR = 'Cette adresse email n\'existe pas.';

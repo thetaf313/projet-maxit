@@ -41,13 +41,6 @@ CREATE TABLE transactions (
     FOREIGN KEY (compte_id) REFERENCES comptes(id)
 );
 
--- CREATE INDEX idx_users_roles ON users(role_id);
--- CREATE INDEX idx_comptes_users ON comptes(user_id);
--- CREATE INDEX idx_transactions_comptes ON transactions(compte_id);
--- CREATE INDEX idx_users_login ON users(login);
--- CREATE INDEX idx_transactions_date ON transactions(date);
--- CREATE INDEX idx_transactions_type ON transactions(type_transaction);
-
 INSERT INTO roles (nom) VALUES 
 ('client'),
 ('commercial');

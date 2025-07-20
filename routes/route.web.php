@@ -61,4 +61,11 @@ $routes = [
         'action' => 'listTransactions',
         'middlewares' => ['auth']
     ],
+
+    '/commercial/dashboard' => [
+        'controller' => ServiceComController::class,
+        'action' => 'index',
+        // 'middlewares' => ['auth', 'isCommercial'],
+        'middlewares' => ['auth']
+    ],
 ];

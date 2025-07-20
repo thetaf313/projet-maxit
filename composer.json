@@ -12,9 +12,19 @@
             "App\\Core\\": "app/core/",
             "App\\Core\\Abstract\\": "app/core/abstract/",
             "App\\Core\\Middlewares\\": "app/core/middlewares/",
-            "App\\Translate\\Fr\\": "app/translate/fr/"
+            "App\\Translate\\Fr\\": "app/translate/fr/",
+            "App\\Migrations\\": "migrations/",
+            "App\\Seeders\\": "seeders/"
         }
     },
+    "scripts": {
+        "database:migrate": "@php bin/migrate",
+        "database:seed": "@php bin/seed"
+    },
+    "bin": [
+        "bin/migrate",
+        "bin/seed"
+    ],
     "authors": [
         {
             "name": "Twist Price",
@@ -22,6 +32,7 @@
         }
     ],
     "require": {
-        "vlucas/phpdotenv": "*"
+        "vlucas/phpdotenv": "*",
+        "symfony/yaml": "^7.3"
     }
 }

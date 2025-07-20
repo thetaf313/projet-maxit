@@ -1,0 +1,81 @@
+core: 
+    Session: App\Core\Session
+    Database: App\Core\Database
+
+service:
+    SecurityService: App\Service\SecurityService
+    TransactionService: App\Service\TransactionService
+    CompteService: App\Service\CompteService
+
+repository:
+    UserRepository: App\Repository\UserRepository
+    CompteRepository: App\Repository\CompteRepository
+    TransactionRepository: App\Repository\TransactionRepository
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# core:
+#     Session:
+#         class: Session
+#         arguments:
+    
+#     Database:
+#         class: Database
+#         arguments:
+#             - '%database.host%'
+#             - '%database.name%'
+#             - '%database.user%'
+#             - '%database.password%'
+#             - '%database.port%'
+  
+# service:
+#     SecurityService:
+#         class: SecurityService
+#         arguments:
+#             - '@UserRepository'
+
+# repository:
+#     UserRepository:
+#         class: UserRepository
+#         arguments:
+#             - '@Database'
+
+#     CompteRepository:
+#         class: CompteRepository
+#         arguments:
+#             - '@Database'
+    
+#     TransactionRepository:
+#         class: TransactionRepository
+#         arguments:
+#             - '@Database'
+
+# controller:
+#     ClientController:
+#         class: ClientController
+#         arguments:
+#             - '@Session'
+#             - '@CompteRepository'
+#             - '@TransactionRepository'
+    
+#     SecurityController:
+#         class: SecurityController
+#         arguments:
+#             - '@Session'
+

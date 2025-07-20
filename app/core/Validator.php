@@ -28,6 +28,7 @@ class Validator
         'senegal_phone' => 'Numéro de téléphone invalide.',
         'senegal_nin' => 'Numéro d\'indentification nationale invalide.',
         'unique' => FrErrorMessages::UNIQUE->value,
+        'phone' => FrErrorMessages::PHONE->value
     ];
 
     private static array $validators = [];
