@@ -11,6 +11,7 @@ repository:
     UserRepository: App\Repository\UserRepository
     CompteRepository: App\Repository\CompteRepository
     TransactionRepository: App\Repository\TransactionRepository
+    RoleRepository: App\Repository\RoleRepository
 
 
 

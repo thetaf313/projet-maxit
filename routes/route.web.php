@@ -4,6 +4,7 @@
 
 use App\Controller\ClientController;
 use App\Controller\SecurityController;
+use App\Controller\ServiceComController;
 use App\Core\ErrorController;
 
 $routes = [
@@ -61,7 +62,16 @@ $routes = [
         'action' => 'listTransactions',
         'middlewares' => ['auth']
     ],
-
+    '/client/account/transfer' => [
+        'controller' => ClientController::class,
+        'action' => 'transfer',
+        'middlewares' => ['auth']
+    ],
+    '/client/account/transfer/store' => [
+        'controller' => ClientController::class,
+        'action' => 'storeTransfer',
+        'middlewares' => ['auth']
+    ],
     '/commercial/dashboard' => [
         'controller' => ServiceComController::class,
         'action' => 'index',

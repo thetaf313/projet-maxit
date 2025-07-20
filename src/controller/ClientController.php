@@ -105,5 +105,14 @@ class ClientController extends AbstractController {
         ]);
     }
 
+    public function transfer() {
+        $user = $this->session->get('user');
+        $user = User::toObject($user);
+        $comptesSecondaires = $this->compteService->getComptesSecondairesByUser($user);
+        $this->renderHtml('client/transfert-depot', [
+            'comptesSecondaires' => array_map(fn($compte) => $compte->toArray(), $comptesSecondaires)
+        ]);
+    }
+
 
 }

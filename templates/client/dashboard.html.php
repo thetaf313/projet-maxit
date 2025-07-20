@@ -92,10 +92,10 @@
                 <div class="card p-4 rounded-2xl border border-gray-600 mb-4">
                     <h2 class="text-white font-semibold text-lg mb-3">Services Disponibles</h2>
                     <div class="grid grid-cols-2 gap-8">
-                        <button class="service-button bg-gray-500 text-white px-4 py-8
+                        <a href="/client/account/transfer" class="service-button bg-gray-500 text-white px-4 py-8
                         rounded-lg hover:bg-gray-400 transition-colors">
                             <span class="icon">💳</span> Transfert
-                        </button>
+                        </a>
                         <button class="service-button bg-gray-500 text-white px-4 py-8
                         rounded-lg hover:bg-gray-400 transition-colors">
                             <span class="icon">🏦</span> Paiement
