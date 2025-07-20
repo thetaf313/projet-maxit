@@ -48,12 +48,12 @@ class Migration
                     echo "La base de données '" . DB_NAME . "' existe déjà.\n";
                 } else {
                     // Création de la base
-                    $adminPdo->exec("CREATE DATABASE \"" . DB_NAME . "\"");
+                    $adminPdo->exec("CREATE DATABASE " . DB_NAME);
                     echo "Base de données '" . DB_NAME . "' créée avec succès.\n";
                 }
             } catch (PDOException $e) {
                 // Si la base existe déjà, on continue
-                if (strpos($e->getMessage(), 'existe deja') === false) {
+                if (strpos($e->getMessage(), 'already exists') === false) {
                     throw $e;
                 }
             }

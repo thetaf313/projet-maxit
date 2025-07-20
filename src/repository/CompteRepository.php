@@ -9,18 +9,19 @@ use App\Entity\User;
 class CompteRepository extends AbstractRepository
 {
 
-    // private static ?CompteRepository $instance = null;
+    private static ?CompteRepository $instance = null;
 
-    public function __construct()
+    private function __construct()
     {
         parent::__construct();
     }
 
-    // public static function getInstance() {
-    //     if (self::$instance == null) {
-    //         self::$instance = new CompteRepository();
-    //     }
-    // }
+    public static function getInstance(): CompteRepository {
+        if (self::$instance == null) {
+            self::$instance = new CompteRepository();
+        }
+        return self::$instance;
+    }
 
     public function selectAll() {}
 

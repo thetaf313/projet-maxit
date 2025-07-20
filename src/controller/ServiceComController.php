@@ -1,4 +1,5 @@
 <?php
+namespace App\Controller;
 
 use App\Core\Abstract\AbstractController;
 use App\Core\App;
@@ -17,7 +18,7 @@ class ServiceComController extends AbstractController
     public function __construct()
     {
         parent::__construct();
-        $this->session = App::getDependency(Session::class);
+        $this->session = App::getDependency('Session');
     }
     public function index()
     {

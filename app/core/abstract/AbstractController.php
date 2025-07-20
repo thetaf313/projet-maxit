@@ -20,7 +20,7 @@ abstract class AbstractController
 
     protected function __construct()
     {
-        $this->session = App::getDependency(Session::class);
+        $this->session = App::getDependency('Session');
     }
 
     public function renderHtml(string $view, $data = []): void

@@ -9,19 +9,19 @@ use PDO;
 class UserRepository extends AbstractRepository
 {
 
-    // private static ?UserRepository $instance = null;
+    private static ?UserRepository $instance = null;
 
     public function __construct()
     {
         parent::__construct();
     }
 
-    // public static function getInstance() {
-    //     if (self::$instance == null) {
-    //         self::$instance = new UserRepository();
-    //     }
-    //     return self::$instance;
-    // }
+    public static function getInstance(): UserRepository {
+        if (self::$instance == null) {
+            self::$instance = new UserRepository();
+        }
+        return self::$instance;
+    }
 
     public function selectAll() {}
 

@@ -2,7 +2,7 @@
 
 namespace App\Core\Abstract;
 
-use App\Core\Database;
+use App\Core\App;
 use PDO;
 use PDOException;
 
@@ -19,7 +19,7 @@ abstract class AbstractRepository
 
     protected function __construct()
     {
-        $this->pdo = Database::getInstance();
+        $this->pdo = App::getDependency('Database');
     }
 
 

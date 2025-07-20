@@ -24,9 +24,9 @@ class ClientController extends AbstractController {
     public function __construct() 
     {
         parent::__construct();
-        $this->session = App::getDependency(Session::class);
-        $this->compteService = App::getDependency(CompteService::class);
-        $this->transactionService = App::getDependency(TransactionService::class);
+        $this->session = App::getDependency('Session');
+        $this->compteService = App::getDependency('CompteService');
+        $this->transactionService = App::getDependency('TransactionService');
     }
 
     public function index() {

@@ -11,11 +11,20 @@ use App\Repository\CompteRepository;
 class CompteService
 {
 
+    private static ?CompteService $instance = null;
     private CompteRepository $compteRepository;
 
     public function __construct()
     {
-        $this->compteRepository = App::getDependency(CompteRepository::class);
+        $this->compteRepository = App::getDependency('CompteRepository');
+    }
+
+    public static function getInstance(): CompteService
+    {
+        if (self::$instance == null) {
+            self::$instance = new CompteService();
+        }
+        return self::$instance;
     }
 
     public function getComptePrincipalByUser(User $user): ?Compte
@@ -39,32 +48,32 @@ class CompteService
         return $this->compteRepository->insert($compte);
     }
 
-public function changerComptePrincipal(User $user, int $compteId): bool
-{
-    try {
-        $this->compteRepository->getPdo()->beginTransaction();
-        // Tous les comptes à type secondaire
-        $this->compteRepository->updateTypeCompteByUser($user, TypeCompte::SECONDAIRE->value);
+    public function changerComptePrincipal(User $user, int $compteId): bool
+    {
+        try {
+            $this->compteRepository->getPdo()->beginTransaction();
+            // Tous les comptes à type secondaire
+            $this->compteRepository->updateTypeCompteByUser($user, TypeCompte::SECONDAIRE->value);
 
-        $compte = $this->compteRepository->selectById($compteId);
-        if ($compte && $compte->getUser()->getId() === $user->getId()) {
-            $compte->setTypeCompte(TypeCompte::PRINCIPAL);
+            $compte = $this->compteRepository->selectById($compteId);
+            if ($compte && $compte->getUser()->getId() === $user->getId()) {
+                $compte->setTypeCompte(TypeCompte::PRINCIPAL);
 
-            $result = $this->compteRepository->updateToPrincipal($compte);
-            if ($result) {
-                $this->compteRepository->getPdo()->commit();
-                return true;
+                $result = $this->compteRepository->updateToPrincipal($compte);
+                if ($result) {
+                    $this->compteRepository->getPdo()->commit();
+                    return true;
+                } else {
+                    $this->compteRepository->getPdo()->rollBack();
+                    return false;
+                }
             } else {
                 $this->compteRepository->getPdo()->rollBack();
                 return false;
             }
-        } else {
+        } catch (\Exception $e) {
             $this->compteRepository->getPdo()->rollBack();
             return false;
         }
-    } catch (\Exception $e) {
-        $this->compteRepository->getPdo()->rollBack();
-        return false;
     }
-}
 }

@@ -16,7 +16,7 @@ class SecurityController extends AbstractController
     public function __construct()
     {
         parent::__construct();
-        $this->securityService = App::getDependency(SecurityService::class);
+        $this->securityService = App::getDependency('SecurityService');
         $this->layout = 'security';
     }
 

@@ -13,25 +13,25 @@ use App\Repository\UserRepository;
 class SecurityService
 {
 
-    // private static ?SecurityService $instance = null;
+    private static ?SecurityService $instance = null;
     private UserRepository $userRepository;
     private CompteRepository $compteRepository;
     private RoleRepository $roleRepository;
 
     public function __construct()
     {
-        $this->userRepository = App::getDependency(UserRepository::class);
-        $this->compteRepository = App::getDependency(CompteRepository::class);
-        $this->roleRepository = App::getDependency(RoleRepository::class);
+        $this->userRepository = App::getDependency('UserRepository');
+        $this->compteRepository = App::getDependency('CompteRepository');
+        $this->roleRepository = App::getDependency('RoleRepository');
     }
 
-    // public static function getInstance(): SecurityService
-    // {
-    //     if (self::$instance == null) {
-    //         self::$instance = new SecurityService();
-    //     }
-    //     return self::$instance;
-    // }
+    public static function getInstance(): SecurityService
+    {
+        if (self::$instance == null) {
+            self::$instance = new SecurityService();
+        }
+        return self::$instance;
+    }
 
     public function seConnecter(string $login, string $password): ?object
     {

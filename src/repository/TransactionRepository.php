@@ -8,18 +8,19 @@ use App\Entity\Transaction;
 
 class TransactionRepository extends AbstractRepository{
 
-    // private static ?TransactionRepository $instance = null;
+    private static ?TransactionRepository $instance = null;
 
     public function __construct()
     {
         parent::__construct();
     }
 
-    // public static function getInstance() {
-    //     if (self::$instance == null) {
-    //         self::$instance = new TransactionRepository();
-    //     }
-    // }
+    public static function getInstance(): TransactionRepository {
+        if (self::$instance == null) {
+            self::$instance = new TransactionRepository();
+        }
+        return self::$instance;
+    }
 
     public function selectLastByCompte(Compte $compte, int $limit = 10): array
     {

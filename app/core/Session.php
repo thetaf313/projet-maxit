@@ -4,21 +4,21 @@ namespace App\Core;
 
 class Session {
 
-    // private static ?Session $session = null;
+    private static ?Session $session = null;
 
-    public function __construct() {
+    private function __construct() {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
     }
 
-    // public static function getInstance(): static {
+    public static function getInstance(): static {
 
-    //     if (self::$session == null) {
-    //         self::$session = new Session();
-    //     }
-    //     return self::$session;
-    // }
+        if (self::$session == null) {
+            self::$session = new Session();
+        }
+        return self::$session;
+    }
 
     public function set(string $key, mixed $data): void {
         $_SESSION[$key] = $data;

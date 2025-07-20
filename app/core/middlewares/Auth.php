@@ -11,7 +11,7 @@ class Auth
     private Session $session;
     public function __invoke() {
         
-        $this->session = App::getDependency(Session::class);
+        $this->session = App::getDependency('Session');
 
         if (!$this->session->isset('user')) {
             // Redirige vers la page de connexion si non authentifié

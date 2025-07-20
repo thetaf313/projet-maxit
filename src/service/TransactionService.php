@@ -8,11 +8,19 @@ use App\Repository\TransactionRepository;
 
 class TransactionService {
 
+    private static ?TransactionService $instance = null;
     private TransactionRepository $transactionRepository;
 
-    public function __construct()
+    private function __construct()
     {
-        $this->transactionRepository = App::getDependency(TransactionRepository::class);   
+        $this->transactionRepository = App::getDependency('TransctionRepository');
+    }
+
+    public static function getInstance(): TransactionService {
+        if (self::$instance == null) {
+            self::$instance = new TransactionService();
+        }
+        return self::$instance;
     }
 
     public function getLastTransactionsByCompte(Compte $compte, int $limit = 10): array

@@ -7,20 +7,20 @@ use App\Entity\Role;
 
 class RoleRepository extends AbstractRepository
 {
-    // private static ?RoleRepository $instance = null
+    private static ?RoleRepository $instance = null;
 
-    public function __construct()
+    private function __construct()
     {
         parent::__construct();
     }
 
-    // public static function getInstance(): RoleRepository
-    // {
-    //     if (self::$instance === null) {
-    //         self::$instance = new RoleRepository();
-    //     }
-    //     return self::$instance;
-    // }
+    public static function getInstance(): RoleRepository
+    {
+        if (self::$instance === null) {
+            self::$instance = new RoleRepository();
+        }
+        return self::$instance;
+    }
 
     public function selectByRoleName(string $roleName): ?array
     {
