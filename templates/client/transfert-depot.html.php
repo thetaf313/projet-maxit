@@ -23,6 +23,8 @@
     }
   </style>
 </head> -->
+
+
 <body class="bg-gray-900 text-white min-h-screen">
   <!-- Navbar -->
   <nav class="navbar p-4 mb-6">
@@ -38,7 +40,7 @@
       <h2 class="text-2xl font-semibold mb-6">Faire un Transfert</h2>
 
       <!-- Choix du type de transfert -->
-      <form class="space-y-6">
+      <form action="" class="space-y-6">
         <div>
           <label class="block mb-2 text-sm text-gray-300">Type de Transfert</label>
           <select id="transferType" class="w-full px-4 py-3 bg-gray-300 text-gray-800 rounded-lg focus:outline-none">
