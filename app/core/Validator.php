@@ -60,26 +60,31 @@ class Validator
             'file_size' => fn($value, $param) => is_array($value) && isset($value['size']) && $value['size'] <= (int)$param,
             'senegal_phone' => fn($value) => preg_match('/^(77|78|76|70|75)[0-9]{7}$/', $value),
             'senegal_nin' => fn($value) => preg_match('/^[12][0-9]{12}$/', $value),
-            'unique' => function ($value, $repositoryClass) {
-                return !self::exists($value, $repositoryClass);
+            'unique' => function ($value, $param) {
+                [$repositoryClass, $column] = explode(',', $param);
+                return !self::exists($value, $repositoryClass, $column);
             },
+            'exists' => function ($value, $param) {
+                [$repositoryClass, $column] = explode(',', $param);
+                return self::exists($value, $repositoryClass, $column);
+            }
         ];
     }
 
-    private static function exists($value, $repositoryClass): bool
+    private static function exists($value, $repositoryClass, $column): bool
     {
         $namespace = 'App\\Repository\\';
-        $repositoryClass = $namespace . $repositoryClass;
-        if (!class_exists($repositoryClass)) {
-            error_log("Repository class $repositoryClass does not exist.");
+        $repositoryClassName = $namespace . $repositoryClass;
+        if (!class_exists($repositoryClassName)) {
+            error_log("La classe Repository $repositoryClassName n'existe pas.");
             return false;
         }
-        $repository = App::getDependency($repositoryClass);
-        if (!method_exists($repository, 'exists')) {
-            error_log("Method 'exists' not found in repository class $repositoryClass.");
+        if (!method_exists($repositoryClassName, 'exists')) {
+            error_log("La méthode 'exists' est introuvable dans la classe Repository $repositoryClassName.");
             return false;
         }
-        return $repository->exists($value);
+        $repositoryInstance = App::getDependency($repositoryClass);
+        return $repositoryInstance->exists($column, $value);
     }
 
     public static function validate(array $data, array $rules): void

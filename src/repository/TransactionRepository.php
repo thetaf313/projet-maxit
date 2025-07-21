@@ -13,6 +13,7 @@ class TransactionRepository extends AbstractRepository{
     public function __construct()
     {
         parent::__construct();
+        $this->table = 'transactions';
     }
 
     public static function getInstance(): TransactionRepository {
@@ -53,8 +54,21 @@ class TransactionRepository extends AbstractRepository{
     }
 
     public function selectAll() {}
-    public function insert($entity):int  {return 0;}
-    public function update() {}
+
+    public function insert($transaction): int  {
+        $query = "INSERT INTO {$this->table} (montant, type_transaction, compte_id) 
+                  VALUES (:montant, :type_transaction, :compte_id)";
+        $params = [
+            'montant' => $transaction->getMontant(),
+            'type_transaction' => $transaction->getTypeTransaction()->value,
+            'compte_id' => $transaction->getCompte()->getId()
+        ];
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute($params);
+        return (int)$this->pdo->lastInsertId();
+    }
+
+    public function update($transaction) {}
     public function delete() {}
     public function selectById() {}
     public function selectBy(array $filter) {}

@@ -18,6 +18,21 @@
         </div>
     </nav>
 
+    <div class="absolute bottom-5 right-5 w-80 h-16 bg-gradient-to-r from-gray-800 to-gray-600">
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="max-w-7xl mx-auto text-center pt-16">
+                <p class="text-white text-3xl font-bold mb-2"><?= htmlspecialchars($_SESSION['error']) ?></p>
+            </div>
+        <?php unset($_SESSION['error']);
+        endif; ?>
+        <?php if (isset($_SESSION['success'])): ?>
+            <div class="max-w-7xl mx-auto text-center pt-16">
+                <p class="text-white text-3xl font-bold mb-2"><?= htmlspecialchars($_SESSION['success']) ?></p>
+            </div>
+        <?php unset($_SESSION['success']);
+        endif; ?>
+    </div>
+
     <div class="max-w-7xl mx-auto py-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -25,22 +40,22 @@
                 <div class="card p-4 rounded-2xl border border-gray-600 mb-4">
                     <h2 class="text-white font-semibold text-lg mb-3">Gestion des Comptes</h2>
                     <form action="/client/change-account" method="post">
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <select name="compte_id" class="account-selector px-4 py-2 rounded-lg text-white flex-1 border-gray-600 bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300">
-                            <option class="bg-gray-700" value="">Selectionner un compte</option>
-                            <?php foreach ($comptesSecondaires as $compte): ?>
-                                <option class="bg-gray-700" value="<?= htmlspecialchars($compte['id']) ?>"><?= htmlspecialchars($compte['telephone']) ?> - <?= htmlspecialchars($compte['type_compte']) ?></option>
-                            <?php endforeach; ?>
-                            <!-- <option value="epargne">Compte Épargne</option>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <select name="compte_id" class="account-selector px-4 py-2 rounded-lg text-white flex-1 border-gray-600 bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                                <option class="bg-gray-700" value="">Selectionner un compte</option>
+                                <?php foreach ($comptesSecondaires as $compte): ?>
+                                    <option class="bg-gray-700" value="<?= htmlspecialchars($compte['id']) ?>"><?= htmlspecialchars($compte['telephone']) ?> - <?= htmlspecialchars($compte['type_compte']) ?></option>
+                                <?php endforeach; ?>
+                                <!-- <option value="epargne">Compte Épargne</option>
                         <option value="business">Compte Business</option>
                         <option value="famille">Compte Famille</option> -->
-                        </select>
-                        <div class="flex gap-2">
-                            <button type="submit" class="bg-[#1f2937] border border-gray-300 px-4 py-2 text-white rounded-lg font-medium">Changer de Compte</button>
-                            <a href="/client/account/add-secondary" class="btn-secondary px-4 py-2 text-white rounded-lg font-medium">+ Ajouter</a>
+                            </select>
+                            <div class="flex gap-2">
+                                <button type="submit" class="bg-[#1f2937] border border-gray-300 px-4 py-2 text-white rounded-lg font-medium">Changer de Compte</button>
+                                <a href="/client/account/add-secondary" class="btn-secondary px-4 py-2 text-white rounded-lg font-medium">+ Ajouter</a>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
                 </div>
 
                 <!-- Infos + Solde -->
@@ -50,7 +65,7 @@
                         <div class="flex items-center space-x-3">
                             <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
                                 <?php if (isset($_SESSION['user'])): ?>
-                                    <span class="text-white font-bold"><?= htmlspecialchars($_SESSION['user']['prenom'][0] .''. $_SESSION['user']['nom'][0]) ?></span>
+                                    <span class="text-white font-bold"><?= htmlspecialchars($_SESSION['user']['prenom'][0] . '' . $_SESSION['user']['nom'][0]) ?></span>
                                 <?php endif; ?>
                             </div>
                             <div>
@@ -92,7 +107,7 @@
                 <div class="card p-4 rounded-2xl border border-gray-600 mb-4">
                     <h2 class="text-white font-semibold text-lg mb-3">Services Disponibles</h2>
                     <div class="grid grid-cols-2 gap-8">
-                        <a href="/client/account/transfer" class="service-button bg-gray-500 text-white px-4 py-8
+                        <a href="/client/account/transfer" class="service-button bg-gray-500 text-white text-center px-4 py-8
                         rounded-lg hover:bg-gray-400 transition-colors">
                             <span class="icon">💳</span> Transfert
                         </a>
@@ -127,7 +142,7 @@
                                     <?php foreach ($lastTransactions as $transaction): ?>
                                         <tr class="transaction-row border-b border-gray-600">
                                             <td class="py-2 px-2 text-gray-300"><?= htmlspecialchars($transaction['date']) ?></td>
-                        
+
                                             <td class="py-2 px-2 text-gray-300"><?= htmlspecialchars($transaction['type_transaction']) ?></td>
                                             <td class="py-2 px-2 text-right <?= $transaction['type_transaction'] == 'Paiement' || $transaction['type_transaction'] == 'Retrait' ? 'text-red-400' : 'text-green-400' ?> font-medium">
                                                 <?= htmlspecialchars(number_format($transaction['montant'], 0, ',', ' ') . ' FCFA') ?>
