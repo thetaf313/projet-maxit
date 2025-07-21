@@ -102,7 +102,7 @@
 
         typeSelect.addEventListener('change', () => {
             const type = typeSelect.value;
-            autre.classList.toggle('hidden', type !== 'vers_autre');
+            autre.classList.toggle('hidden', type !== 'vers_principal');
             secondaire.classList.toggle('hidden', type !== 'vers_secondaire');
         });
     </script>

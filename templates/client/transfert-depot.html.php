@@ -23,6 +23,11 @@
     }
   </style>
 </head> -->
+<?php
+$errors = $_SESSION['errors'] ?? [];
+unset($_SESSION['errors']);
+?>
+
 <body class="bg-gray-900 text-white min-h-screen">
   <!-- Navbar -->
   <nav class="navbar p-4 mb-6">
@@ -38,37 +43,50 @@
       <h2 class="text-2xl font-semibold mb-6">Faire un Transfert</h2>
 
       <!-- Choix du type de transfert -->
-      <form class="space-y-6">
+      <form action="/client/account/transfer/store" method="post" class="space-y-6">
         <div>
           <label class="block mb-2 text-sm text-gray-300">Type de Transfert</label>
-          <select id="transferType" class="w-full px-4 py-3 bg-gray-300 text-gray-800 rounded-lg focus:outline-none">
-            <option value="">Sélectionner</option>
-            <option value="vers_autre">Vers un autre compte principal</option>
+          <select id="transferType" name="transfer_to" class="w-full px-4 py-3 bg-gray-300 text-gray-800 rounded-lg focus:outline-none">
+            <!-- <option value="">Sélectionner</option> -->
+            <option value="vers_principal">Vers un autre compte principal</option>
             <option value="vers_secondaire">Vers un de mes comptes secondaires</option>
           </select>
         </div>
 
         <!-- Champ : Vers un autre compte principal -->
-        <div id="destinataireAutre" class="hidden">
+        <div id="destinataireAutre" class="block">
           <label class="block mb-2 text-sm text-gray-300">Numéro du compte destinataire</label>
-          <input type="text" placeholder="Ex: 0012458799312" class="w-full px-4 py-3 bg-gray-300 text-gray-800 rounded-lg focus:outline-none" />
+          <input type="text" name="telephone" placeholder="Ex: 786660606" class="w-full px-4 py-3 bg-gray-300 text-gray-800 rounded-lg focus:outline-none" />
+          <?php if (isset($errors['telephone'])): ?>
+            <div class="text-red-500 text-sm mt-1"><?= htmlspecialchars($errors['telephone'][0]) ?></div>
+          <?php endif; ?>
         </div>
 
         <!-- Champ : Vers un compte secondaire -->
         <div id="destinataireSecondaire" class="hidden">
           <label class="block mb-2 text-sm text-gray-300">Choisir un de vos comptes secondaires</label>
-          <select class="w-full px-4 py-3 bg-gray-300 text-gray-800 rounded-lg focus:outline-none">
+          <select name="destinataire_compte" class="w-full px-4 py-3 bg-gray-300 text-gray-800 rounded-lg focus:outline-none">
             <option value="">Sélectionner un compte</option>
-            <option value="epargne">Compte Épargne</option>
+            <?php if (empty($comptesSecondaires)): ?>
+              <option value="" disabled>Aucun compte secondaire disponible</option>
+            <?php else: ?>
+              <?php foreach ($comptesSecondaires as $compte): ?>
+                <option value="<?= $compte['id'] ?>"><?= htmlspecialchars($compte['telephone']) ?> - Solde: <?= htmlspecialchars($compte['solde']) ?> FCFA</option>
+              <?php endforeach; ?>
+            <?php endif; ?>
+            <!-- <option value="epargne">Compte Épargne</option>
             <option value="business">Compte Business</option>
-            <option value="famille">Compte Famille</option>
+            <option value="famille">Compte Famille</option> -->
           </select>
         </div>
 
         <!-- Montant -->
         <div>
           <label class="block mb-2 text-sm text-gray-300">Montant à transférer (FCFA)</label>
-          <input type="number" min="1" placeholder="Ex: 10000" class="w-full px-4 py-3 bg-gray-300 text-gray-800 rounded-lg focus:outline-none" />
+          <input type="number" name="montant" placeholder="Ex: 10000" class="w-full px-4 py-3 bg-gray-300 text-gray-800 rounded-lg focus:outline-none" />
+          <?php if (isset($errors['montant'])): ?>
+            <div class="text-red-500 text-sm mt-1"><?= htmlspecialchars($errors['montant'][0]) ?></div>
+          <?php endif; ?>
         </div>
 
         <!-- Bouton valider -->

@@ -8,7 +8,6 @@ $dsnMysql = "{$_ENV['MYSQL_DRIVER']}:host={$_ENV['MYSQL_DB_HOST']};port={$_ENV['
 
 $dsnPostgres = "{$_ENV['POSTGRES_DRIVER']}:host={$_ENV['POSTGRES_DB_HOST']};port={$_ENV['POSTGRES_DB_PORT']};dbname={$_ENV['POSTGRES_DB_NAME']}";
 
-// Pour switcher entre PostgreSQL et MySQL, changer DSN_POSTGRES ou DSN_MYSQL
 define('DB_DRIVER', $_ENV['DB_DRIVER']);
 if (DB_DRIVER === 'mysql') {
     define('DSN', $dsnMysql);

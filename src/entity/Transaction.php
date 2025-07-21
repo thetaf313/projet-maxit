@@ -7,11 +7,11 @@ use DateTime;
 class Transaction {
 
     private int $id;
-    private DateTime $date;
+    private ?DateTime $date;
     private float $montant;
     private Compte $compte;
-    private TypeTransaction $typeTransaction;
-    private StatutTransaction $statutTransaction;
+    private ?TypeTransaction $typeTransaction;
+    private ?StatutTransaction $statutTransaction;
 
     public function __construct(int $id=0, ?DateTime  $date=null, float $montant=0.0, ?TypeTransaction $typeTransaction=null, ?StatutTransaction $statutTransaction=null)
     {

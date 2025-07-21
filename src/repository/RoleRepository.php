@@ -12,6 +12,7 @@ class RoleRepository extends AbstractRepository
     private function __construct()
     {
         parent::__construct();
+        $this->table = 'roles';
     }
 
     public static function getInstance(): RoleRepository
@@ -33,7 +34,7 @@ class RoleRepository extends AbstractRepository
 
     public function selectAll() {}
     public function insert($entity):int {return 0;}
-    public function update() {}
+    public function update($role) {}
     public function delete() {}
     public function selectById() {}
     public function selectBy(array $filter) {}

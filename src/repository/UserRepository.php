@@ -14,6 +14,7 @@ class UserRepository extends AbstractRepository
     public function __construct()
     {
         parent::__construct();
+        $this->table = 'users';
     }
 
     public static function getInstance(): UserRepository {
@@ -46,7 +47,7 @@ class UserRepository extends AbstractRepository
         return (int)$this->pdo->lastInsertId();
     }
 
-    public function update() {}
+    public function update($user) {}
     public function delete() {}
     public function selectById() {}
     public function selectBy(array $filter) {}
@@ -55,7 +56,7 @@ class UserRepository extends AbstractRepository
     public function selectByLogin(string $login): ?User
     {
         $start = microtime(true);
-        $query = 'SELECT * FROM users WHERE login = :login';
+        $query = "SELECT * FROM {$this->table} WHERE login = :login";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':login', $login);
         $stmt->execute();
@@ -64,12 +65,4 @@ class UserRepository extends AbstractRepository
         return $row ? User::toObject($row) : null;
     }
 
-    public function exists(string $value) {
-        $query = "SELECT COUNT(*) FROM users WHERE login = :value OR numero_carte_identite = :value";
-        $stmt = $this->pdo->prepare($query);
-        $stmt->bindParam(':value', $value);
-        $stmt->execute();
-        $count = $stmt->fetchColumn();
-        return $count > 0;
-    } 
 }

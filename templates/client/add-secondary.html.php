@@ -25,6 +25,11 @@
     }
   </style>
 </head> -->
+<?php
+$errors = $_SESSION['errors'] ?? [];
+unset($_SESSION['errors']);
+?>
+
 <body class="bg-gray-800 min-h-screen text-white overflow-hidden">
   <!-- Navigation -->
   <nav class="navbar p-4 mb-6">
@@ -40,27 +45,43 @@
       <!-- Formulaire -->
       <div class="card p-6 rounded-2xl border border-gray-600">
         <h2 class="text-2xl font-semibold mb-6">Ajouter un Compte Secondaire</h2>
-        <form action="#" method="POST">
+        <?php if (isset($errors['globalError']) && !empty($errors['globalError'])): ?>
+          <div class="bg-red-400 text-white text-center p-3 rounded-lg mb-4">
+            <?= htmlspecialchars($errors['globalError'][0]) ?>
+          </div>
+        <?php endif; ?>
+        <form action="/client/account/store-secondary" method="POST">
           <div class="space-y-4">
-            <div>
+            <!-- <div>
               <label class="block mb-2 text-sm font-medium">Nom du Compte</label>
               <input type="text" name="accountName" required placeholder="Ex : Compte Épargne"
                      class="w-full px-4 py-3 bg-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            </div>
+            </div> -->
             <div>
               <label class="block mb-2 text-sm font-medium">Numéro de Compte</label>
-              <input type="text" name="accountNumber" required placeholder="Ex : 0012458799312"
-                     class="w-full px-4 py-3 bg-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <input type="text" name="telephone" placeholder="Ex : 786660606"
+                class="w-full px-4 py-3 bg-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <?php if (isset($errors['telephone'])): ?>
+                <div class="text-red-400 text-sm mt-1">
+                  <?= htmlspecialchars($errors['telephone'][0]) ?>
+                </div>
+              <?php endif; ?>
             </div>
             <div>
-              <label class="block mb-2 text-sm font-medium">Solde Initial (optionnel)</label>
-              <input type="number" name="initialBalance" min="0" placeholder="Ex : 10000"
-                     class="w-full px-4 py-3 bg-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <label class="block mb-1 text-sm font-medium">Solde Initial (optionnel)</label>
+              <span class="text-gray-400 text-xs mb-2">Entrez un montant entre 1 CFA et 2 000 000 CFA</span>
+              <input type="number" name="solde" placeholder="Ex : 10000"
+                class="w-full px-4 py-3 bg-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <?php if (isset($errors['solde'])): ?>
+                <div class="text-red-400 text-sm mt-1">
+                  <?= htmlspecialchars($errors['solde'][0]) ?>
+                </div>
+              <?php endif; ?>
             </div>
           </div>
 
           <div class="flex gap-4 mt-6">
-            <a href="dashboard.html" class="btn-secondary px-6 py-3 rounded-lg font-medium text-center block w-1/2 text-white">
+            <a href="/client/dashboard" class="btn-secondary px-6 py-3 rounded-lg font-medium text-center block w-1/2 text-white">
               Annuler
             </a>
             <button type="submit" class="btn-primary px-6 py-3 rounded-lg font-medium w-1/2">

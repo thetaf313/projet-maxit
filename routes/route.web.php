@@ -54,8 +54,8 @@ $routes = [
     ],
     '/client/account/store-secondary' => [
         'controller' => ClientController::class,
-        'action' => 'storeSecondaryAccount',
-        'middlewares' => ['auth', 'cryptPass']
+        'action' => 'createSecondaryAccount',
+        'middlewares' => ['auth']
     ],
     '/client/account/list-transactions' => [
         'controller' => ClientController::class,

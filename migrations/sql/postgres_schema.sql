@@ -4,7 +4,7 @@ Create TYPE statut_transaction_enum AS ENUM ('Valide', 'Annule');
 
 CREATE TABLE roles (
     id SERIAL PRIMARY KEY,
-    nom VARCHAR(50) NOT NULL
+    nom VARCHAR(50) UNIQUE NOT NULL
 );
 
 CREATE TABLE users (
@@ -14,7 +14,7 @@ CREATE TABLE users (
     login VARCHAR(20) UNIQUE NOT NULL,
     password VARCHAR(65) NOT NULL,
     adresse TEXT,
-    numero_carte_identite VARCHAR(15),
+    numero_carte_identite VARCHAR(15) UNIQUE,
     photo_identite_recto VARCHAR(255),
     photo_identite_verso VARCHAR(255),
     role_id INTEGER NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE users (
 
 CREATE TABLE comptes (
     id SERIAL PRIMARY KEY,
-    telephone VARCHAR(20),
+    telephone VARCHAR(20) UNIQUE NOT NULL,
     type_compte type_compte_enum NOT NULL,
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     solde DECIMAL(15,2) DEFAULT 0,

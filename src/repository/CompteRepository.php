@@ -14,6 +14,7 @@ class CompteRepository extends AbstractRepository
     private function __construct()
     {
         parent::__construct();
+        $this->table = 'comptes';
     }
 
     public static function getInstance(): CompteRepository {
@@ -83,7 +84,19 @@ class CompteRepository extends AbstractRepository
         return $stmt->execute($params);
     }
 
-    public function update() {}
+    public function update($compte) {
+        $query = "UPDATE comptes SET telephone = :telephone, type_compte = :type_compte, solde = :solde, user_id = :user_id WHERE id = :id";
+        $params = [
+            'telephone' => $compte->getTelephone(),
+            'type_compte' => $compte->getTypeCompte()->value,
+            'solde' => $compte->getSolde(),
+            'user_id' => $compte->getUser()->getId(),
+            'id' => $compte->getId()
+        ];
+        $stmt = $this->pdo->prepare($query);
+        return $stmt->execute($params);
+    }
+
     public function delete() {}
     public function selectById($compteId) {
         $query = "SELECT * FROM comptes WHERE id = :id";
@@ -109,5 +122,12 @@ class CompteRepository extends AbstractRepository
         return null;
     }
 
-    public function findByTelephone(string $telephone) {}
+    public function findByTelephone(string $telephone) {
+        $query = "SELECT * FROM {$this->table} WHERE telephone = :telephone";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':telephone', $telephone);
+        $stmt->execute();
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $row ? Compte::toObject($row) : null;
+    }
 }
